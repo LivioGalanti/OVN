@@ -11,6 +11,7 @@ import copy
 # used for the simulation of 100 connections with all the transceiver strategies
 def main():
     network = Network('nodes.json')
+    network_fixed_rate = Network('nodes.json', 'fixed_rate')
     network_flex_rate = Network('nodes.json', 'flex_rate')
     network_shannon = Network('nodes.json', 'shannon')
     node_labels = list(network.nodes.keys())
@@ -25,7 +26,7 @@ def main():
     connections3 = copy.deepcopy(connections)
     bins = np.linspace(90, 700, 20)
     # fixed rate_____________________________________________________________________________
-    streamed_connections_fixed_rate = network.stream(connections1, best='snr')
+    streamed_connections_fixed_rate = network_fixed_rate.stream(connections1, best='snr')
 
     snrs = [connection.snr for connection in streamed_connections_fixed_rate]
     snrs_ = np.ma.masked_equal(snrs, 0)
