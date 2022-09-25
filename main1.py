@@ -13,8 +13,8 @@ def main():
     # fixed rate_____________________________________________________________________________
     network = Network('nodes.json')
     n_node = len(network.nodes.keys())
-    saturationFix = []
-    MsFix = []
+    saturation_fixed = []
+    M_fixed = []
     M = 1
     while 1:
         t_mtx = np.ones((n_node, n_node)) * 100 * M
@@ -38,13 +38,13 @@ def main():
                 if el == float('inf'):
                     sat += 1
         sat = sat / n_elem * 100
-        saturationFix.append(sat)
-        MsFix.append(M)
+        saturation_fixed.append(sat)
+        M_fixed.append(M)
         if sat > sat_percent:
             break
         M += 1
         network.free_space()
-    plt.plot(MsFix, saturationFix)
+    plt.plot(M_fixed, saturation_fixed)
     plt.title('Saturation Fixed-Rate')
     '''plt.savefig('Plots/M_fixed_rate.png')'''
     plt.xlabel('M')
@@ -88,7 +88,6 @@ def main():
         network_flex_rate.free_space()
     plt.plot(Msflex, saturationflex)
     plt.title('Saturation Flex-Rate')
-    '''plt.savefig('Plots/M_flex_rate.png')'''
     plt.xlabel('M')
     plt.ylabel('% of unsatisfied requests')
     plt.grid(linestyle='-', linewidth=0.5)
@@ -131,12 +130,11 @@ def main():
         network_shannon.free_space()
     plt.plot(Msshan, saturationshan)
     plt.title('Saturation Parameter Shannon')
-    '''plt.savefig('Plots/M_shannon.png')'''
     plt.xlabel('M')
     plt.ylabel('% of unsatisfied requests')
     plt.grid(linestyle='-', linewidth=0.5)
     plt.show()
-    plt.plot(MsFix, saturationFix, label='fixed-rate')
+    plt.plot(M_fixed, saturation_fixed, label='fixed-rate')
     plt.plot(Msflex, saturationflex, label='flex-rate')
     plt.plot(Msshan, saturationshan, label='shannon')
     plt.xlabel('M')
@@ -144,7 +142,6 @@ def main():
     plt.grid(linestyle='-', linewidth=0.5)
     plt.legend(loc='lower right')
     plt.title('Saturation Parameter')
-    '''plt.savefig('Plots/M_all.png')'''
     plt.show()
 
 

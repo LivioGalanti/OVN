@@ -32,7 +32,6 @@ def main():
 
     plt.title('BitRate Full fixed-rate')
     plt.xlabel('Gbps')
-    '''plt.savefig('Plots/BitRateFullfixed_ratenf.png')'''
     plt.show()
 
     # flex rate_____________________________________________________________________________
@@ -45,7 +44,6 @@ def main():
 
     plt.xlabel('Gbps')
     plt.title('BitRate Full Flex-Rate')
-    '''plt.savefig('Plots/BitRateFullFlex_Ratenf.png')'''
     plt.show()
 
     # shannon________________________________________________________________________________
@@ -59,25 +57,23 @@ def main():
 
     plt.xlabel('Gbps')
     plt.title('BitRate Full Shannon')
-    '''plt.savefig('Plots/BitRateFullShannonnf.png')'''
     plt.show()
 
     # _______________________________________________________________________________________
-    """""""""
+
     plt.legend(loc='upper right')
     plt.title('BitRate Distribution')
     plt.xlabel('BitRate [Gbps]')
     plt.show()
-    """""""""
+
     latencies = [connection.latency for connection in streamed_connections_fixed_rate]
     plt.hist(np.ma.masked_equal(latencies, 0), bins=25)
     plt.title('Latency Distribution')
-    '''plt.savefig('Plots/LatencyDistributionb2.png')'''
     plt.show()
+
     snrs = [connection.snr for connection in streamed_connections_flex_rate]
     plt.hist(np.ma.masked_equal(snrs, 0), bins=20)
     plt.title('SNR Dstribution')
-    '''plt.savefig('Plots/SNRDistributionnf.png')'''
     plt.show()
 
     # total capacity _________________________________________________________________________

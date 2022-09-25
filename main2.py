@@ -34,7 +34,6 @@ def main():
 
     plt.title('SNR Distribution Full fixed-rate')
     plt.xlabel('dB')
-    '''plt.savefig('Plots/SNRDistributionFullfixed_rate.png')'''
     plt.show()
 
     bit_rate_fixed_rate = [connection.bit_rate for connection in streamed_connections_fixed_rate]
@@ -43,7 +42,6 @@ def main():
 
     plt.title('BitRate Full fixed-rate')
     plt.xlabel('Gbps')
-    '''plt.savefig('Plots/BitRateFullfixed_rate.png')'''
     plt.show()
 
     # flex rate_____________________________________________________________________________
@@ -56,7 +54,6 @@ def main():
 
     plt.title('SNR Distribution Full flex-rate')
     plt.xlabel('dB')
-    '''plt.savefig('Plots/SNRDistributionFullflex_rate.png')'''
     plt.show()
 
     bit_rate_flex_rate = [connection.bit_rate for connection in streamed_connections_flex_rate]
@@ -65,7 +62,6 @@ def main():
 
     plt.xlabel('Gbps')
     plt.title('BitRate Full Flex-Rate')
-    '''plt.savefig('Plots/BitRateFullFlex_Rate.png')'''
     plt.show()
 
     # shannon________________________________________________________________________________
@@ -78,7 +74,6 @@ def main():
 
     plt.title('SNR Distribution Full Shannon')
     plt.xlabel('dB')
-    '''plt.savefig('Plots/SNRDistributionFullshannon.png')'''
     plt.show()
 
     bit_rate_shannon = [connection.bit_rate for connection in streamed_connections_shannon]
@@ -88,26 +83,24 @@ def main():
 
     plt.xlabel('Gbps')
     plt.title('BitRate Full Shannon')
-    '''plt.savefig('Plots/BitRateFullShannon.png')'''
     plt.show()
 
     # _______________________________________________________________________________________
-    """""""""
+
     plt.legend(loc="upper right")
     plt.title('BitRate Distribution')
     plt.xlabel('BitRate [Gbps]')
     plt.show()
-    """""""""
+
     streamed_connections = network.stream(connections)
     latencies = [connection.latency for connection in streamed_connections_shannon]
     plt.hist(np.ma.masked_equal(latencies, 0), bins=25)
     plt.title('Latency Distribution')
-    '''plt.savefig('Plots/LatencyDistribution.png')'''
     plt.show()
+
     snrs = [connection.snr for connection in streamed_connections_shannon]
     plt.hist(np.ma.masked_equal(snrs, 0), bins=20)
     plt.title('SNR Dstribution')
-    '''plt.savefig('Plots/SNRDistribution.png')'''
     plt.show()
 
     # total capacity _________________________________________________________________________

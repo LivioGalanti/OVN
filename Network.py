@@ -18,7 +18,7 @@ Bn = 12.5e9  # noise bandwidth
 class Network(object):
 
     def __init__(self, json_file, transceiver='fixed_rate'):
-        # load the file in a json variable
+
         nodes_json = json.load(open(json_file, 'r'))
         # empty struct dict
         self.nodes = {}
@@ -38,18 +38,18 @@ class Network(object):
             else:
                 node.transceiver = nodes_json[node_label]['transceiver']
 
-            for connect_n_label in node_dict['connected_nodes']:
+            for connected_nodes_label in node_dict['connected_nodes']:
                 line_dict = {}
-                line_label = node_label + connect_n_label
+                line_label = node_label + connected_nodes_label
                 line_dict['label'] = line_label
                 # starting node pos (x, y)
                 node_position = np.array(nodes_json[node_label]['position'])
 
                 # pos of the other node(x, y)
-                connect_n_pos = np.array(nodes_json[connect_n_label]['position'])
+                connected_nodes_position = np.array(nodes_json[connected_nodes_label]['position'])
 
                 # length=sqrt((x1-x2)^2+(y1-y2)^2)
-                line_dict['length'] = np.sqrt(np.sum(node_position - connect_n_pos) ** 2)
+                line_dict['length'] = np.sqrt(np.sum(node_position - connected_nodes_position) ** 2)
 
                 line = Line(line_dict)
                 self.lines[line_label] = line
@@ -66,33 +66,33 @@ class Network(object):
         if not self._connected:
             self.connect()
         node_labels = self.nodes.keys()
-        all_couples = []
+        couples_list = []
         for label1 in node_labels:
             for label2 in node_labels:
                 if label2 != label1:
-                    all_couples.append(label1 + label2)
+                    couples_list.append(label1 + label2)
 
         df = pd.DataFrame()
         paths = []
         latencies = []
         noises = []
         snrs = []
-        for couples in all_couples:
+        for couples in couples_list:
             for path in self.find_paths(couples[0], couples[1]):
                 path_str = ''
                 for node in path:
                     path_str += node + '-->'
                 paths.append(path_str[:-3])
-                s_i = SignalInformation(s_power, path)
+                s_info = SignalInformation(s_power, path)
                 if couples in self.lines.keys():
                     line = self.lines[couples]
-                    s_power = line.optimized_launch_power(line.eta_nli(s_i.df, s_i.Rs))
-                s_i.set_signal_power(s_power)
+                    s_power = line.optimized_launch_power(line.eta_nli(s_info.df, s_info.Rs))
+                s_info.set_signal_power(s_power)
 
-                s_i = self.propagate(s_i, occupation=False)
-                latencies.append(s_i.latency)
-                noises.append(s_i.noise_power)
-                snrs.append(10 * np.log10(s_i.signal_power / s_i.noise_power))
+                s_info = self.propagate(s_info, occupation=False)
+                latencies.append(s_info.latency)
+                noises.append(s_info.noise_power)
+                snrs.append(10 * np.log10(s_info.signal_power / s_info.noise_power))
 
         df['path'] = paths
         df['latency'] = latencies
@@ -133,8 +133,8 @@ class Network(object):
 
     def free_space(self):
         states = ['free'] * len(self.route_space['path'])
-        for l in self.lines.values():
-            l.free_state()
+        for l_values in self.lines.values():
+            l_values.free_state()
         for i in range(10):
             self.route_space[str(i)] = states
 

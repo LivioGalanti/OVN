@@ -60,8 +60,8 @@ class Line(object):
     def propagate(self, lightpath, occupation=False):
         latency = self.latency_generation()
         lightpath.add_latency(latency)
-        sp = self.optimized_launch_power(self.eta_nli(lightpath.df, lightpath.Rs))
-        lightpath.set_signal_power(sp)
+        s_pwr = self.optimized_launch_power(self.eta_nli(lightpath.df, lightpath.Rs))
+        lightpath.set_signal_power(s_pwr)
         noise = self.noise_generation(lightpath)
         lightpath.add_noise(noise)
         if occupation:
