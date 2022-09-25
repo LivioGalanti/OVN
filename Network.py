@@ -322,21 +322,21 @@ class Network(object):
         GSNR_db = pd.array(self.weighted_paths.loc[self.weighted_paths['path'] == path]['snr'])[0]
         GSNR = 10 ** (GSNR_db / 10)
         if strategy == 'fixed_rate':
-            if GSNR > 2 * math.erfcinv(2 * BER_t) ** 2 * (Rs / Bn):
+            if GSNR > 2 * (math.erfcinv(2 * BER_t) ** 2) * (Rs / Bn):
                 Rb = 100
             else:
                 Rb = 0
 
         if strategy == 'flex_rate':
-            if GSNR < 2 * math.erfcinv(2 * BER_t) ** 2 * (Rs / Bn):
+            if GSNR < 2 * (math.erfcinv(2 * BER_t) ** 2) * (Rs / Bn):
                 Rb = 0
-            elif (GSNR > 2 * math.erfcinv(2 * BER_t) ** 2 * (Rs / Bn)) & (GSNR < (14 / 3) * math.erfcinv(
-                    (3 / 2) * BER_t) ** 2 * (Rs / Bn)):
+            elif (GSNR > 2 * (math.erfcinv(2 * BER_t) ** 2) * (Rs / Bn)) & (GSNR < (14 / 3) * (math.erfcinv(
+                    (3 / 2) * BER_t) ** 2) * (Rs / Bn)):
                 Rb = 100
-            elif (GSNR > (14 / 3) * math.erfcinv((3 / 2) * BER_t) ** 2 * (Rs / Bn)) & (GSNR < 10 * math.erfcinv(
-                    (8 / 3) * BER_t) ** 2 * (Rs / Bn)):
+            elif (GSNR > (14 / 3) * (math.erfcinv((3 / 2) * BER_t) ** 2) * (Rs / Bn)) & (GSNR < 10 * (math.erfcinv(
+                    (8 / 3) * BER_t) ** 2) * (Rs / Bn)):
                 Rb = 200
-            elif GSNR > 10 * math.erfcinv((8 / 3) * BER_t) ** 2 * (Rs / Bn):
+            elif GSNR > 10 * (math.erfcinv((8 / 3) * BER_t) ** 2) * (Rs / Bn):
                 Rb = 400
 
         if strategy == 'shannon':
