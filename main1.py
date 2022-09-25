@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 def main():
     sat_percent = 50
     # fixed rate_____________________________________________________________________________
-    network = Network('nodes.json')
+    network = Network('nodes.json', 'fixed_rate')
     n_node = len(network.nodes.keys())
     saturation_fixed = []
     M_fixed = []
@@ -46,7 +46,6 @@ def main():
         network.free_space()
     plt.plot(M_fixed, saturation_fixed)
     plt.title('Saturation Fixed-Rate')
-    '''plt.savefig('Plots/M_fixed_rate.png')'''
     plt.xlabel('M')
     plt.ylabel('% of unsatisfied requests')
     plt.grid(linestyle='-', linewidth=0.5)
