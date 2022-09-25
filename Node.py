@@ -1,3 +1,4 @@
+from Graph import Graph
 class Node(object):
     def __init__(self, node):
         self._label = node['label']  # string
@@ -6,6 +7,7 @@ class Node(object):
         self._successive = {}  # dict [Line]
         self._switching_matrix = None
         self._transceiver = ''
+
 
     @property
     def transceiver(self):
@@ -53,3 +55,27 @@ class Node(object):
             lightpath.next()
             lightpath = line.propagate(lightpath, occupation)
         return lightpath
+
+
+    def probe(self, lightpath):
+        path=lightpath.path
+        edges = []
+        n=0
+        if len(path) > 1:
+            for i in path:
+                node = path[i]
+                for con_nod in node.connected_nodes:
+                    edges.append(con_nod)
+                    n+=1
+
+            graph = Graph(edges, n)
+            discovered = [False] * n
+
+            for i in range(n):
+                if not discovered[i]:
+                    graph.DFS(i, discovered)
+
+
+
+
+

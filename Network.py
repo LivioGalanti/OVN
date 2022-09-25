@@ -216,6 +216,12 @@ class Network(object):
         prop_s_i = first_node.propagate(lightpath, occupation)
         return prop_s_i
 
+    def probe(self, lightpath):
+        path = lightpath.path
+        first_node = self.nodes[path[0]]
+        prop_s_i = first_node.probe(lightpath)
+        return prop_s_i
+
     #  for each element of connections set the attribute latency or snr (latency by default)
     def stream(self, connections, best='latency'):
         streamed_connections = []
